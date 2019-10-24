@@ -81,5 +81,15 @@ class Student
     end
   end
   
-  def self.first_X_students_in_grade_10()
+  def self.first_X_students_in_grade_10(num)
+    sql = <<-SQL
+      SELECT number
+      FROM students
+      WHERE grade = 10
+    SQL
+    
+    DB[:conn].execute(sql,num).map do |row|
+      self.new_from_db(row)
+    end
+  end
 end

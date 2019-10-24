@@ -21,7 +21,14 @@ class Student
   end
 
   def self.find_by_name(name)
+    sql = <<-SQL
+      SELECT name
+      FROM students
+    SQL
     
+    DB [:conn].execute(sql).map.do |row|
+      self.new_from_db(name)
+    end
   end
   
   def save
